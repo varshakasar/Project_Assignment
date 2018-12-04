@@ -12,12 +12,9 @@ var Server = mongoose.model('server', serverSchema);
 var Project = mongoose.model('project', projectSchema);
 var projectGroup = mongoose.model('projectgroup', projectGroupSchema);
 var User = mongoose.model('user', userSchema);
-// Get Homepage
-router.get('/', (req, res) => {
-  res.send('index');
-});
 
-router.get('/getAllProject', function(req, res) {
+
+router.get('/Project', function(req, res) {
   //res.send('In getting all project route');
   Project.find({}).exec(function(err, data) {
     if (err) {
@@ -29,7 +26,7 @@ router.get('/getAllProject', function(req, res) {
   })
 })
 
-router.post('/newProject', function(req, res) {
+router.post('/Project', function(req, res) {
 
   //res.send('In new project route');
   //res.send(req.body);
@@ -50,7 +47,7 @@ router.post('/newProject', function(req, res) {
   })
 })
 
-router.put('/updateProject/:id', function(req, res) {
+router.put('/Project/:id', function(req, res) {
 
   //res.send('In update project route');
 
@@ -80,7 +77,7 @@ router.put('/updateProject/:id', function(req, res) {
     });
 })
 
-router.delete('/deleteProject/:id', function(req, res) {
+router.delete('/Project/:id', function(req, res) {
 
   //res.send('In delete project route');
   var pid = req.params.id;
@@ -96,7 +93,7 @@ router.delete('/deleteProject/:id', function(req, res) {
     })
 })
 
-router.get('/getAllProjectGroup',function(req,res){
+router.get('/ProjectGroup',function(req,res){
 
 	//res.send('In getting all project Group route');
 
@@ -111,7 +108,7 @@ router.get('/getAllProjectGroup',function(req,res){
 	})
 })
 
-router.post('/newProjectGroup', function(req, res) {
+router.post('/ProjectGroup', function(req, res) {
 
   //res.send('In new project group route');
   //res.send(req.body);
@@ -131,7 +128,7 @@ router.post('/newProjectGroup', function(req, res) {
   })
 })
 
-router.put('/updateProjectGroup/:id', function(req, res) {
+router.put('/ProjectGroup/:id', function(req, res) {
 
   //res.send('In update project group route');
 
@@ -160,7 +157,7 @@ router.put('/updateProjectGroup/:id', function(req, res) {
     });
 })
 
-router.delete('/deleteProjectGroup/:id', function(req, res) {
+router.delete('/ProjectGroup/:id', function(req, res) {
 
   //res.send('In delete project group route');
   var pgid = req.params.id;
@@ -176,7 +173,7 @@ router.delete('/deleteProjectGroup/:id', function(req, res) {
     })
 })
 
-router.get('/getAllServer', function(req, res) {
+router.get('/Server', function(req, res) {
   //res.send('In getting all server route');
   Server.find({}).exec(function(err, data) {
     if (err) {
@@ -285,7 +282,7 @@ router.get('/ServersByProjectAndProjectGroup', function(req, res) {
     }
   })
 })
-router.post('/newServer', function(req, res) {
+router.post('/Server', function(req, res) {
   //res.send('In new server route');
   var sname = req.body.name;
   var sip = req.body.ip;
@@ -311,7 +308,7 @@ router.post('/newServer', function(req, res) {
     }
   })
 })
-router.put('/updateServer/:id', function(req, res) {
+router.put('/Server/:id', function(req, res) {
   //res.send('In update server route');
   var serverid = req.params.id;
   var servername = req.body.name;
@@ -343,7 +340,7 @@ router.put('/updateServer/:id', function(req, res) {
       }
     });
 })
-router.delete('/deleteServer/:id', function(req, res) {
+router.delete('/Server/:id', function(req, res) {
   //res.send('In delete server route');
   var serverid = req.params.id;
   Server.findOneAndDelete({
@@ -358,7 +355,7 @@ router.delete('/deleteServer/:id', function(req, res) {
     })
 })
 
-router.get('/getAllUser',function(req,res){
+router.get('/User',function(req,res){
 
 	//res.send('In getting all user route');
 
@@ -373,7 +370,7 @@ router.get('/getAllUser',function(req,res){
 	})
 })
 
-router.post('/newUser', function(req, res) {
+router.post('/User', function(req, res) {
 
   res.send('In new user route');
   //res.send(req.body);
@@ -398,7 +395,7 @@ router.post('/newUser', function(req, res) {
   })
 })
 
-router.put('/updateUser/:id', function(req, res) {
+router.put('/User/:id', function(req, res) {
 
   //res.send('In update user route');
 
@@ -432,7 +429,7 @@ router.put('/updateUser/:id', function(req, res) {
     });
 })
 
-router.delete('/deleteUser/:id', function(req, res) {
+router.delete('/User/:id', function(req, res) {
 
   //res.send('In delete user route');
   var uid = req.params.id;
