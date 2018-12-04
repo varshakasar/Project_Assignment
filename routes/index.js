@@ -21,9 +21,9 @@ router.get('/getAllProject', function(req, res) {
   //res.send('In getting all project route');
   Project.find({}).exec(function(err, data) {
     if (err) {
-      console.log('Error in getting all data');
+      res.send('Error in getting all data');
     } else {
-      console.log('Success in getting all data');
+      res.send('Success in getting all data');
       res.send(data);
     }
   })
@@ -32,7 +32,7 @@ router.get('/getAllProject', function(req, res) {
 router.post('/newProject', function(req, res) {
 
   //res.send('In new project route');
-  //console.log(req.body);
+  //res.send(req.body);
   var name = req.body.name;
   var url = req.body.url;
 
@@ -43,7 +43,7 @@ router.post('/newProject', function(req, res) {
 
   projObject.save(function(err, data) {
     if (err) {
-      console.log('Error in save operation');
+      res.send('Error in save operation');
     } else {
       res.send('Save successfully');
     }
@@ -73,9 +73,9 @@ router.put('/updateProject/:id', function(req, res) {
     query,
     function(err, data) {
       if (err) {
-        console.log('Error in updation');
+        res.send('Error in updation');
       } else {
-        console.log('Updation done successfully');
+        res.send('Updation done successfully');
       }
     });
 })
@@ -89,7 +89,7 @@ router.delete('/deleteProject/:id', function(req, res) {
     },
     function(err, data) {
       if (err) {
-        console.log('Error in deletion');
+        res.send('Error in deletion');
       } else {
         res.send('Deletion done successfully');
       }
@@ -102,10 +102,10 @@ router.get('/getAllProjectGroup',function(req,res){
 
 	projectGroup.find({}).exec(function(err,data){
 		if(err){
-			console.log('Error in getting all data');
+			res.send('Error in getting all data');
 		}
 		else{
-			console.log('Success in getting all data');
+			res.send('Success in getting all data');
 			res.send(data);
 		}
 	})
@@ -114,7 +114,7 @@ router.get('/getAllProjectGroup',function(req,res){
 router.post('/newProjectGroup', function(req, res) {
 
   //res.send('In new project group route');
-  //console.log(req.body);
+  //res.send(req.body);
   var name = req.body.name;
   //res.send(name);
 
@@ -180,9 +180,9 @@ router.get('/getAllServer', function(req, res) {
   //res.send('In getting all server route');
   Server.find({}).exec(function(err, data) {
     if (err) {
-      console.log('Error in getting all data');
+      res.send('Error in getting all data');
     } else {
-      console.log('Success in getting all data');
+      res.send('Success in getting all data');
       res.send(data);
     }
   })
@@ -193,7 +193,7 @@ router.get('/PopulateByProject', function(req, res) {
     .populate('project')
     .exec(function(err, data) {
       if (err) {
-        console.log(err);
+        res.send(err);
       } else {
         res.send(data);
       }
@@ -205,7 +205,7 @@ router.get('/PopulateByProjectGroup', function(req, res) {
     .populate('group')
     .exec(function(err, data) {
       if (err) {
-        console.log(err);
+        res.send(err);
       } else {
         res.send(data);
       }
@@ -303,11 +303,11 @@ router.post('/newServer', function(req, res) {
   });
   serverObject.save(function(err, data) {
     if (err) {
-      console.log('Error in save operation');
-      console.log(err);
+      res.send('Error in save operation');
+      res.send(err);
     } else {
       res.send(data);
-      //console.log('Save successfully');
+      //res.send('Save successfully');
     }
   })
 })
@@ -337,9 +337,9 @@ router.put('/updateServer/:id', function(req, res) {
     query,
     function(err, data) {
       if (err) {
-        console.log('Error in updation');
+        res.send('Error in updation');
       } else {
-        console.log('Updation done successfully');
+        res.send('Updation done successfully');
       }
     });
 })
@@ -367,7 +367,7 @@ router.get('/getAllUser',function(req,res){
 			res.send('Error in getting all data');
 		}
 		else{
-			console.log('Success in getting all data');
+			res.send('Success in getting all data');
 			res.send(data);
 		}
 	})
@@ -376,7 +376,7 @@ router.get('/getAllUser',function(req,res){
 router.post('/newUser', function(req, res) {
 
   res.send('In new user route');
-  //console.log(req.body);
+  //res.send(req.body);
   var name = req.body.name;
   var password = req.body.password;
   var allowedServer = req.body.allowedServer;
