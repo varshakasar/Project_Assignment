@@ -94,7 +94,7 @@ router.delete('/Project/:id', function(req, res, next) {
     })
 })
 
-router.get('/ProjectGroup',function(req,res){
+router.get('/ProjectGroup',function(req, res, next){
 
   //res.send('In getting all project Group route');
 
