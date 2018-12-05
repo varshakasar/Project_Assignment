@@ -15,6 +15,7 @@ var User = mongoose.model('user', userSchema);
 
 
 router.get('/Project', function(req, res, next) {
+
   //res.send('In getting all project route');
 
 
@@ -110,7 +111,6 @@ router.get('/ProjectGroup',function(req, res, next){
 
 router.post('/ProjectGroup', function(req, res, next) {
 
-  //res.send('In new project group route');
 
   var name = req.body.name;
     var projgrpObject = new projectGroup({
