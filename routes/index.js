@@ -14,18 +14,36 @@ var projectGroup = mongoose.model('projectgroup', projectGroupSchema);
 var User = mongoose.model('user', userSchema);
 
 
+// router.get('/Project', function(req, res, next) {
+
+//   //res.send('In getting all project route');
+
+
+//   Project.find({}).exec(function(err, data) {
+//     if (err) {
+//       throw new Error();
+//       } else {
+//       res.send(data);
+//     }
+//   })
+// })
+
 router.get('/Project', function(req, res, next) {
 
   //res.send('In getting all project route');
-
-
-  Project.find({}).exec(function(err, data) {
+  try{
+    Project.find({}).exec(function(err, data) {
     if (err) {
       throw new Error();
       } else {
       res.send(data);
     }
   })
+  }
+  catch(e){
+    //console.log(e);
+    next(e);
+  }
 })
 
 router.post('/Project', function(req, res, next) {
@@ -39,14 +57,19 @@ router.post('/Project', function(req, res, next) {
     name: name,
     url: url
   });
-
-  projObject.save(function(err, data) {
+  try{
+    projObject.save(function(err, data) {
     if (err) {
       throw new Error();
       } else {
       res.send('Save successfully');
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.put('/Project/:id', function(req, res, next) {
@@ -65,8 +88,8 @@ router.put('/Project/:id', function(req, res, next) {
   var query = {
     $set: obj
   };
-
-  Project.findOneAndUpdate({
+  try{
+    Project.findOneAndUpdate({
       _id: pid
     },
     query,
@@ -77,13 +100,19 @@ router.put('/Project/:id', function(req, res, next) {
         res.send('Updation done successfully');
       }
     });
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.delete('/Project/:id', function(req, res, next) {
 
   //res.send('In delete project route');
   var pid = req.params.id;
-  Project.findOneAndDelete({
+  try{
+    Project.findOneAndDelete({
       _id: pid
     },
     function(err, data) {
@@ -93,13 +122,18 @@ router.delete('/Project/:id', function(req, res, next) {
         res.send('Deletion done successfully');
       }
     })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.get('/ProjectGroup',function(req, res, next){
 
   //res.send('In getting all project Group route');
-
-  projectGroup.find({}).exec(function(err,data){
+  try{
+    projectGroup.find({}).exec(function(err,data){
     if(err){
       throw new Error();
       }
@@ -107,6 +141,11 @@ router.get('/ProjectGroup',function(req, res, next){
       res.send(data);
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.post('/ProjectGroup', function(req, res, next) {
@@ -117,14 +156,19 @@ router.post('/ProjectGroup', function(req, res, next) {
     var projgrpObject = new projectGroup({
     name: name
     });
-
-  projgrpObject.save(function(err, data) {
-    if (err) {
-      throw new Error();
-      } else {
-      res.send('Save successfully');
+    try{
+        projgrpObject.save(function(err, data) {
+      if (err) {
+        throw new Error();
+        } else {
+        res.send('Save successfully');
+        }
+        })
     }
-  })
+    catch(e){
+      next(e);
+    }
+
 })
 
 router.put('/ProjectGroup/:id', function(req, res, next) {
@@ -142,8 +186,8 @@ router.put('/ProjectGroup/:id', function(req, res, next) {
   var query = {
     $set: obj
   };
-
-  projectGroup.findOneAndUpdate({
+  try{
+    projectGroup.findOneAndUpdate({
       _id: pgid
     },
     query,
@@ -154,13 +198,18 @@ router.put('/ProjectGroup/:id', function(req, res, next) {
         res.send('Updation done successfully');
       }
     });
+  }
+  catch(e){
+    next(e);
+  }
 })
 
 router.delete('/ProjectGroup/:id', function(req, res, next) {
 
   //res.send('In delete project group route');
   var pgid = req.params.id;
-  projectGroup.findOneAndDelete({
+  try{
+    projectGroup.findOneAndDelete({
       _id: pgid
     },
     function(err, data) {
@@ -170,21 +219,33 @@ router.delete('/ProjectGroup/:id', function(req, res, next) {
         res.send('Deletion done successfully');
       }
     })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.get('/Server', function(req, res, next) {
   //res.send('In getting all server route');
-  Server.find({}).exec(function(err, data) {
+  try{
+    Server.find({}).exec(function(err, data) {
     if (err) {
       throw new Error();
       } else {
       res.send(data);
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.get('/PopulateByProject', function(req, res, next) {
-  Server.find({})
+  try{
+    Server.find({})
     .populate('project')
     .exec(function(err, data) {
       if (err) {
@@ -193,10 +254,16 @@ router.get('/PopulateByProject', function(req, res, next) {
         res.send(data);
       }
     })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.get('/PopulateByProjectGroup', function(req, res, next) {
-  Server.find({})
+  try{
+    Server.find({})
     .populate('group')
     .exec(function(err, data) {
       if (err) {
@@ -205,10 +272,16 @@ router.get('/PopulateByProjectGroup', function(req, res, next) {
         res.send(data);
       }
     })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.get('/PopulateByProjectAndProjectGroup', function(req, res, next) {
-  Server.find({})
+  try{
+    Server.find({})
     .populate('project')
     .populate('group')
     .exec(function(err, data) {
@@ -218,10 +291,16 @@ router.get('/PopulateByProjectAndProjectGroup', function(req, res, next) {
         res.send(data);
       }
     })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.get('/ServerListByProject', function(req, res, next) {
-  Server.aggregate([{
+  try{
+    Server.aggregate([{
     $group: {
       _id: '$project',
       'Server Name': {
@@ -238,9 +317,15 @@ router.get('/ServerListByProject', function(req, res, next) {
       res.send(result);
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 router.get('/ServerListByProjectGroup', function(req, res, next) {
-  Server.aggregate([{
+  try{
+    Server.aggregate([{
     $group: {
       _id: '$project',
       'Server Name': {
@@ -257,9 +342,14 @@ router.get('/ServerListByProjectGroup', function(req, res, next) {
       res.send(result);
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
 })
 router.get('/ServersByProjectAndProjectGroup', function(req, res, next) {
-  Server.aggregate([{
+  try{
+    Server.aggregate([{
     $group: {
       _id: {
         'project': '$project',
@@ -279,6 +369,11 @@ router.get('/ServersByProjectAndProjectGroup', function(req, res, next) {
       res.send(result);
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 router.post('/Server', function(req, res, next) {
   //res.send('In new server route');
@@ -296,13 +391,20 @@ router.post('/Server', function(req, res, next) {
     group: projectGroupId,
     giturl: sgiturl
   });
-  serverObject.save(function(err, data) {
+  try{
+    serverObject.save(function(err, data) {
     if (err) {
       throw new Error();
       } else {
       res.send(data);
       }
   })
+  }
+  catch(e)
+  {
+    next(e);
+  }
+
 })
 router.put('/Server/:id', function(req, res, next) {
   //res.send('In update server route');
@@ -324,7 +426,8 @@ router.put('/Server/:id', function(req, res, next) {
   var query = {
     $set: obj
   };
-  Server.findOneAndUpdate({
+  try{
+    Server.findOneAndUpdate({
       _id: serverid
     },
     query,
@@ -335,11 +438,18 @@ router.put('/Server/:id', function(req, res, next) {
         res.send('Updation done successfully');
       }
     });
+  }
+  catch(e)
+  {
+    next(e);
+  }
+
 })
 router.delete('/Server/:id', function(req, res, next) {
   //res.send('In delete server route');
   var serverid = req.params.id;
-  Server.findOneAndDelete({
+  try{
+    Server.findOneAndDelete({
       _id: serverid
     },
     function(err, data) {
@@ -349,13 +459,18 @@ router.delete('/Server/:id', function(req, res, next) {
         res.send('Deletion done successfully');
       }
     })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.get('/User',function(req, res, next){
 
   //res.send('In getting all user route');
-
-  User.find({}).exec(function(err,data){
+  try{
+    User.find({}).exec(function(err,data){
     if(err){
       throw new Error();
       }
@@ -363,6 +478,11 @@ router.get('/User',function(req, res, next){
       res.send(data);
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.post('/User', function(req, res, next) {
@@ -380,14 +500,19 @@ router.post('/User', function(req, res, next) {
     allowedServer:allowedServer,
     publicKeys:publicKeys
   });
-
-  userObject.save(function(err, data) {
+  try{
+    userObject.save(function(err, data) {
     if (err) {
       throw new Error();
       } else {
       res.send('Save successfully');
     }
   })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 router.put('/User/:id', function(req, res, next) {
@@ -410,8 +535,8 @@ router.put('/User/:id', function(req, res, next) {
   var query = {
     $set: obj
   };
-
-  User.findOneAndUpdate({
+  try{
+    User.findOneAndUpdate({
       _id: uid
     },
     query,
@@ -422,13 +547,18 @@ router.put('/User/:id', function(req, res, next) {
         res.send('Updation done successfully');
       }
     });
+  }
+  catch(e){
+    next(e);
+  }
 })
 
 router.delete('/User/:id', function(req, res, next) {
 
   //res.send('In delete user route');
   var uid = req.params.id;
-  User.findOneAndDelete({
+  try{
+    User.findOneAndDelete({
       _id: uid
     },
     function(err, data) {
@@ -438,6 +568,11 @@ router.delete('/User/:id', function(req, res, next) {
         res.send('Deletion done successfully');
       }
     })
+  }
+  catch(e){
+    next(e);
+  }
+
 })
 
 
