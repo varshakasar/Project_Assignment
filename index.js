@@ -23,7 +23,12 @@ db.once('open', function () {
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/', routes);
 
-app.set('port', (process.env.PORT || 3000));
+app.use(function(err,req,res,next) {
+  //console.log(err.stack);
+  res.status(500).send({"Error" : err.stack});
+});
+
+app.set('port', (process.env.PORT || 8000));
 
 app.listen(app.get('port'), () => {
   console.log('Server started on port '+app.get('port'));

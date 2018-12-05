@@ -14,22 +14,23 @@ var projectGroup = mongoose.model('projectgroup', projectGroupSchema);
 var User = mongoose.model('user', userSchema);
 
 
-router.get('/Project', function(req, res) {
+router.get('/Project', function(req, res, next) {
   //res.send('In getting all project route');
+
+
   Project.find({}).exec(function(err, data) {
     if (err) {
-      res.send('Error in getting all data');
-    } else {
-      res.send('Success in getting all data');
+      throw new Error();
+      } else {
       res.send(data);
     }
   })
 })
 
-router.post('/Project', function(req, res) {
+router.post('/Project', function(req, res, next) {
+
 
   //res.send('In new project route');
-  //res.send(req.body);
   var name = req.body.name;
   var url = req.body.url;
 
@@ -40,14 +41,14 @@ router.post('/Project', function(req, res) {
 
   projObject.save(function(err, data) {
     if (err) {
-      res.send('Error in save operation');
-    } else {
+      throw new Error();
+      } else {
       res.send('Save successfully');
     }
   })
 })
 
-router.put('/Project/:id', function(req, res) {
+router.put('/Project/:id', function(req, res, next) {
 
   //res.send('In update project route');
 
@@ -56,7 +57,7 @@ router.put('/Project/:id', function(req, res) {
   var purl = req.body.url;
 
   var obj = {
-  	name:pname,
+    name:pname,
     url: purl
   };
 
@@ -70,14 +71,14 @@ router.put('/Project/:id', function(req, res) {
     query,
     function(err, data) {
       if (err) {
-        res.send('Error in updation');
-      } else {
+        throw new Error();
+        } else {
         res.send('Updation done successfully');
       }
     });
 })
 
-router.delete('/Project/:id', function(req, res) {
+router.delete('/Project/:id', function(req, res, next) {
 
   //res.send('In delete project route');
   var pid = req.params.id;
@@ -86,8 +87,8 @@ router.delete('/Project/:id', function(req, res) {
     },
     function(err, data) {
       if (err) {
-        res.send('Error in deletion');
-      } else {
+        throw new Error();
+       } else {
         res.send('Deletion done successfully');
       }
     })
@@ -95,40 +96,37 @@ router.delete('/Project/:id', function(req, res) {
 
 router.get('/ProjectGroup',function(req,res){
 
-	//res.send('In getting all project Group route');
+  //res.send('In getting all project Group route');
 
-	projectGroup.find({}).exec(function(err,data){
-		if(err){
-			res.send('Error in getting all data');
-		}
-		else{
-			res.send('Success in getting all data');
-			res.send(data);
-		}
-	})
+  projectGroup.find({}).exec(function(err,data){
+    if(err){
+      throw new Error();
+      }
+    else{
+      res.send(data);
+    }
+  })
 })
 
-router.post('/ProjectGroup', function(req, res) {
+router.post('/ProjectGroup', function(req, res, next) {
 
   //res.send('In new project group route');
-  //res.send(req.body);
-  var name = req.body.name;
-  //res.send(name);
 
-  var projgrpObject = new projectGroup({
+  var name = req.body.name;
+    var projgrpObject = new projectGroup({
     name: name
     });
 
   projgrpObject.save(function(err, data) {
     if (err) {
-      res.send('Error in save operation');
-    } else {
+      throw new Error();
+      } else {
       res.send('Save successfully');
     }
   })
 })
 
-router.put('/ProjectGroup/:id', function(req, res) {
+router.put('/ProjectGroup/:id', function(req, res, next) {
 
   //res.send('In update project group route');
 
@@ -137,7 +135,7 @@ router.put('/ProjectGroup/:id', function(req, res) {
 
 
   var obj = {
-  	name:pgname,
+    name:pgname,
    };
 
   var query = {
@@ -150,14 +148,14 @@ router.put('/ProjectGroup/:id', function(req, res) {
     query,
     function(err, data) {
       if (err) {
-        res.send('Error in updation');
-      } else {
+        throw new Error();
+       } else {
         res.send('Updation done successfully');
       }
     });
 })
 
-router.delete('/ProjectGroup/:id', function(req, res) {
+router.delete('/ProjectGroup/:id', function(req, res, next) {
 
   //res.send('In delete project group route');
   var pgid = req.params.id;
@@ -166,63 +164,62 @@ router.delete('/ProjectGroup/:id', function(req, res) {
     },
     function(err, data) {
       if (err) {
-        res.send('Error in deletion');
-      } else {
+        throw new Error();
+        } else {
         res.send('Deletion done successfully');
       }
     })
 })
 
-router.get('/Server', function(req, res) {
+router.get('/Server', function(req, res, next) {
   //res.send('In getting all server route');
   Server.find({}).exec(function(err, data) {
     if (err) {
-      res.send('Error in getting all data');
-    } else {
-      res.send('Success in getting all data');
+      throw new Error();
+      } else {
       res.send(data);
     }
   })
 })
 
-router.get('/PopulateByProject', function(req, res) {
+router.get('/PopulateByProject', function(req, res, next) {
   Server.find({})
     .populate('project')
     .exec(function(err, data) {
       if (err) {
-        res.send(err);
-      } else {
+        throw new Error();
+        } else {
         res.send(data);
       }
     })
 })
 
-router.get('/PopulateByProjectGroup', function(req, res) {
+router.get('/PopulateByProjectGroup', function(req, res, next) {
   Server.find({})
     .populate('group')
     .exec(function(err, data) {
       if (err) {
-        res.send(err);
-      } else {
+        throw new Error();
+        } else {
         res.send(data);
       }
     })
 })
 
-router.get('/PopulateByProjectAndProjectGroup', function(req, res) {
+router.get('/PopulateByProjectAndProjectGroup', function(req, res, next) {
   Server.find({})
     .populate('project')
     .populate('group')
     .exec(function(err, data) {
       if (err) {
-        res.send(err);
-      } else {
+        throw new Error();
+        } else {
         res.send(data);
       }
     })
 })
 
-router.get('/ServerListByProject', function(req, res) {
+router.get('/ServerListByProject', function(req, res, next) {
   Server.aggregate([{
     $group: {
       _id: '$project',
@@ -235,13 +232,13 @@ router.get('/ServerListByProject', function(req, res) {
     }
   }], function(err, result) {
     if (err) {
-      res.send(err);
-    } else {
+      throw new Error();
+     } else {
       res.send(result);
     }
   })
 })
-router.get('/ServerListByProjectGroup', function(req, res) {
+router.get('/ServerListByProjectGroup', function(req, res, next) {
   Server.aggregate([{
     $group: {
       _id: '$project',
@@ -254,13 +251,13 @@ router.get('/ServerListByProjectGroup', function(req, res) {
     }
   }], function(err, result) {
     if (err) {
-      res.send(err);
-    } else {
+      throw new Error();
+      } else {
       res.send(result);
     }
   })
 })
-router.get('/ServersByProjectAndProjectGroup', function(req, res) {
+router.get('/ServersByProjectAndProjectGroup', function(req, res, next) {
   Server.aggregate([{
     $group: {
       _id: {
@@ -276,13 +273,13 @@ router.get('/ServersByProjectAndProjectGroup', function(req, res) {
     }
   }], function(err, result) {
     if (err) {
-      res.send(err);
-    } else {
+      throw new Error();
+      } else {
       res.send(result);
     }
   })
 })
-router.post('/Server', function(req, res) {
+router.post('/Server', function(req, res, next) {
   //res.send('In new server route');
   var sname = req.body.name;
   var sip = req.body.ip;
@@ -300,15 +297,13 @@ router.post('/Server', function(req, res) {
   });
   serverObject.save(function(err, data) {
     if (err) {
-      res.send('Error in save operation');
-      res.send(err);
-    } else {
+      throw new Error();
+      } else {
       res.send(data);
-      //res.send('Save successfully');
-    }
+      }
   })
 })
-router.put('/Server/:id', function(req, res) {
+router.put('/Server/:id', function(req, res, next) {
   //res.send('In update server route');
   var serverid = req.params.id;
   var servername = req.body.name;
@@ -334,13 +329,13 @@ router.put('/Server/:id', function(req, res) {
     query,
     function(err, data) {
       if (err) {
-        res.send('Error in updation');
-      } else {
+        throw new Error();
+        } else {
         res.send('Updation done successfully');
       }
     });
 })
-router.delete('/Server/:id', function(req, res) {
+router.delete('/Server/:id', function(req, res, next) {
   //res.send('In delete server route');
   var serverid = req.params.id;
   Server.findOneAndDelete({
@@ -348,32 +343,31 @@ router.delete('/Server/:id', function(req, res) {
     },
     function(err, data) {
       if (err) {
-        res.send('Error in deletion');
-      } else {
+        throw new Error();
+       } else {
         res.send('Deletion done successfully');
       }
     })
 })
 
-router.get('/User',function(req,res){
+router.get('/User',function(req, res, next){
 
-	//res.send('In getting all user route');
+  //res.send('In getting all user route');
 
-	User.find({}).exec(function(err,data){
-		if(err){
-			res.send('Error in getting all data');
-		}
-		else{
-			res.send('Success in getting all data');
-			res.send(data);
-		}
-	})
+  User.find({}).exec(function(err,data){
+    if(err){
+      throw new Error();
+      }
+    else{
+      res.send(data);
+    }
+  })
 })
 
-router.post('/User', function(req, res) {
+router.post('/User', function(req, res, next) {
 
   res.send('In new user route');
-  //res.send(req.body);
+  //console.log(req.body);
   var name = req.body.name;
   var password = req.body.password;
   var allowedServer = req.body.allowedServer;
@@ -388,14 +382,14 @@ router.post('/User', function(req, res) {
 
   userObject.save(function(err, data) {
     if (err) {
-      res.send('Error in save operation');
-    } else {
+      throw new Error();
+      } else {
       res.send('Save successfully');
     }
   })
 })
 
-router.put('/User/:id', function(req, res) {
+router.put('/User/:id', function(req, res, next) {
 
   //res.send('In update user route');
 
@@ -406,7 +400,7 @@ router.put('/User/:id', function(req, res) {
   var upublicKeys = req.body.publicKeys;
 
   var obj = {
-  	name:uname,
+    name:uname,
     password: upassword,
     allowedServer:uallowedServer,
     publicKeys:upublicKeys
@@ -422,14 +416,14 @@ router.put('/User/:id', function(req, res) {
     query,
     function(err, data) {
       if (err) {
-        res.send('Error in updation');
-      } else {
+        throw new Error();
+        } else {
         res.send('Updation done successfully');
       }
     });
 })
 
-router.delete('/User/:id', function(req, res) {
+router.delete('/User/:id', function(req, res, next) {
 
   //res.send('In delete user route');
   var uid = req.params.id;
@@ -438,8 +432,8 @@ router.delete('/User/:id', function(req, res) {
     },
     function(err, data) {
       if (err) {
-        res.send('Error in deletion');
-      } else {
+        throw new Error();
+       } else {
         res.send('Deletion done successfully');
       }
     })
