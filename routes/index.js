@@ -111,6 +111,7 @@ router.get('/ProjectGroup',function(req, res, next){
 
 router.post('/ProjectGroup', function(req, res, next) {
 
+  //res.send('In new project group route');
 
   var name = req.body.name;
     var projgrpObject = new projectGroup({
