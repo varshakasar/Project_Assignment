@@ -14,19 +14,6 @@ var projectGroup = mongoose.model('projectgroup', projectGroupSchema);
 var User = mongoose.model('user', userSchema);
 
 
-// router.get('/Project', function(req, res, next) {
-
-//   //res.send('In getting all project route');
-
-
-//   Project.find({}).exec(function(err, data) {
-//     if (err) {
-//       throw new Error();
-//       } else {
-//       res.send(data);
-//     }
-//   })
-// })
 
 router.get('/Project', function(req, res, next) {
 
